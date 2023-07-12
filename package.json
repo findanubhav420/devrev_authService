@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx nodemon index.js",
+    "start": "node index.js",
     "test": "npx jest --watchAll",
     "test:coverage": "npx jest --watchAll --coverage"
   },
