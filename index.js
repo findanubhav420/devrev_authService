@@ -11,6 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use(router);
+app.get('/', (req, res) => res.send('Authentication server is running!'));
 
 const PORT = 4000;
 

@@ -21,5 +21,12 @@ module.exports={
     "database": "auth_db",
     "host": "127.0.0.1",
     "dialect": "postgres"
-  }
+  },
+  "production": {
+    "username": "pdycxrdc",
+    "password": "QwTPjhlEox7UFc6jLNedmuQ8gQRr8pwH",
+    "database": "pdycxrdc",
+    "host": "trumpet.db.elephantsql.com",
+    "dialect": "postgres"
+  },
 };
