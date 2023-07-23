@@ -18,6 +18,7 @@ const createUser = async (req, res) => {
     catchBlockHandler(error, res);
   }
 };
+
 const loginUser = async (req, res) => {
   try {
     const {email, password} = req.body;
@@ -27,6 +28,7 @@ const loginUser = async (req, res) => {
     catchBlockHandler(error, res);
   }
 };
+
 const checkTokenValidity = async (req, res) => {
   try {
     const token = req.headers.authorization.split(' ')[1];

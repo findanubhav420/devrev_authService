@@ -26,7 +26,7 @@ const loginUser = async (email, password) => {
   const checkIfPasswordIsValid = await passwordUtil.checkEncryptedPassword(user.password, password);
   if (!checkIfPasswordIsValid)
     throw new HTTPError('Invalid password', 401);
-  const newToken = await tokenUtil.generateToken(user.id);
+  const newToken = await tokenUtil.generateToken(user.id, user.isAdmin);
   return { user, token: newToken, email };
 };
 

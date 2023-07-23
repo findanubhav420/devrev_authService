@@ -6,21 +6,8 @@ const express = require('express');
 const app = express();
 
 const {router} = require('./src/routes/authRoute');
-
-const corsOpts = {
-    origin: '*',
   
-    methods: [
-      'GET',
-      'POST',
-    ],
-  
-    allowedHeaders: [
-      'Content-Type',
-    ],
-  };
-  
-  app.use(cors(corsOpts));
+app.use(cors());
 app.use(express.json());
 
 app.use(router);

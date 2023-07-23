@@ -1,9 +1,12 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const generateToken = async (id) => {
+const generateToken = async (id, isAdmin) => {
   let token = jwt.sign(
-    { id: id },
+    { 
+      id: id,
+      role: isAdmin 
+    },
     process.env.JWT_SECRET,
     { expiresIn: '1d' }
   );
