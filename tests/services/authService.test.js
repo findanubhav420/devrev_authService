@@ -50,14 +50,22 @@ describe('Auth Service', () => {
       jest.spyOn(passwordUtil, 'checkEncryptedPassword').mockResolvedValue(true);
       jest.spyOn(tokenUtil, 'generateToken').mockResolvedValue('token');
       const decodedToken = await AuthService.loginUser('test', 'password');
-      expect(decodedToken).toEqual({'token': 'token', 'user': mockUser});
+      expect(decodedToken).toEqual({'user': mockUser,'token': 'token', email: 'test'});
     });
 
     it('should throw an error if user is not found', async () => {
       jest.spyOn(db, 'findOne').mockResolvedValue(null);
       await expect(AuthService.loginUser('test', 'password')).rejects.toEqual(expect.objectContaining({ message: 'User not found' }));
     });
+
+    it('should throw an error if password is invalid', async () => {
+      jest.spyOn(db, 'findOne').mockResolvedValue(mockUser);
+      jest.spyOn(passwordUtil, 'checkEncryptedPassword').mockResolvedValue(false);
+      await expect(AuthService.loginUser('test', 'password')).rejects.toEqual(expect.objectContaining({ message: 'Invalid password' }));
+    });
+
   });
+
   describe('checkTokenValidity', () => {
     it('should return decoded token if token is valid', async () => {
       jest.spyOn(tokenUtil, 'verifyToken').mockResolvedValue({ id: 1 });
@@ -69,4 +77,41 @@ describe('Auth Service', () => {
       await expect(AuthService.checkTokenValidity('token')).rejects.toEqual(expect.objectContaining({ message: 'Invalid token' }));
     });
   });
+
+  describe('loginAdmin', () => {
+    const mockAdmin = {
+      id: 1,
+      email: 'test2',
+      password: 'password',
+      isAdmin: true,
+      createdAt: '2021-03-01T00:00:00.000Z',
+      updatedAt: '2021-03-01T00:00:00.000Z',
+    };
+
+    it('should return admin if email and password is valid', async () => {
+      jest.spyOn(db, 'findOne').mockResolvedValue(mockAdmin);
+      jest.spyOn(passwordUtil, 'checkEncryptedPassword').mockResolvedValue(true);
+      jest.spyOn(tokenUtil, 'generateToken').mockResolvedValue('token');
+      const decodedToken = await AuthService.loginAdmin('test', 'password');
+      expect(decodedToken).toEqual({user: mockAdmin, token: 'token'});
+    });
+
+    it('should throw an error if user is not found', async () => {
+      jest.spyOn(db, 'findOne').mockResolvedValue(null);
+      await expect(AuthService.loginAdmin('test', 'password')).rejects.toEqual(expect.objectContaining({ message: 'User not found' }));
+    });
+
+    it('should throw an error if user is not an admin', async () => {
+      jest.spyOn(db, 'findOne').mockResolvedValue({isAdmin: false});
+      await expect(AuthService.loginAdmin('test', 'password')).rejects.toEqual(expect.objectContaining({ message: 'User is not an admin' }));
+    });
+
+    it('should throw an error if password is invalid', async () => {
+      jest.spyOn(db, 'findOne').mockResolvedValue(mockAdmin);
+      jest.spyOn(passwordUtil, 'checkEncryptedPassword').mockResolvedValue(false);
+      await expect(AuthService.loginAdmin('test', 'password')).rejects.toEqual(expect.objectContaining({ message: 'Invalid password' }));
+    });
+
+  });
+
 });

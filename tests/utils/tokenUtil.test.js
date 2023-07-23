@@ -15,5 +15,9 @@ describe('Token Util', () => {
       const decoded = await verifyToken(token);
       expect(decoded).not.toBe(null);
     });
+    it('should return false if token is invalid', async () => {
+      const decoded = await verifyToken('token');
+      expect(decoded).toBe(false);
+    });
   });
 });
