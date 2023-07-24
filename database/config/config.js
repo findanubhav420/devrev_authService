@@ -4,24 +4,24 @@ require('dotenv').config({ path: envPath });
 
 module.exports={
   "development": {
-    "username": process.env.PGUSER,
-    "password": process.env.PGPASSWORD,
-    "database": process.env.PGDATABASE,
-    "host": process.env.PGHOST,
-    "dialect": process.env.DIALECT,
+    "username": "postgres",
+    "password": "123456",
+    "database": "auth_db",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
   },
   "test": {
-    "username": process.env.PGUSER,
-    "password": process.env.PGPASSWORD,
-    "database": process.env.PGDATABASE,
-    "host": process.env.PGHOST,
-    "dialect": process.env.DIALECT,
+    "username": "postgres",
+    "password": "123456",
+    "database": "auth_db",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
   },
   "production": {
-    "username": process.env.PGUSER,
-    "password": process.env.PGPASSWORD,
-    "database": process.env.PGDATABASE,
-    "host": process.env.PGHOST,
-    "dialect": process.env.DIALECT,
+    "username": "postgres",
+    "password": "123456",
+    "database": "auth_db",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
   },
 };
